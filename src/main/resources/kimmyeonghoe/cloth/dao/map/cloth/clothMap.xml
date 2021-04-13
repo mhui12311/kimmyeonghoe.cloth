@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='kimmyeonghoe.cloth.dao.map.cloth.ClothMap'>
+	<select id='selectCloths' resultMap='clothMap'>
+		select cloth_num, cloth_name, kind, price, reg_date, content, image_name,
+		display_state, cloth_level, color, cloth_size, quantity
+		from cloths
+		order by cloth_num desc
+	</select>
+	
+	<select id='searchCloth' resultMap='clothMap'>
+		select * from cloths
+		where cloth_num = #{clothNum}
+	</select>
+	
+	<select id='searchClothWithKeyword' resultMap='clothMap'>
+		select * from cloths
+		WHERE cloth_name LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<resultMap id='clothMap' type='cloth'>
+		<id property='clothNum' column='cloth_num' />
+		<result property='clothName' column='cloth_name' />
+		<result property='kind' column='kind' />
+		<result property='price' column='price' />
+		<result property='regDate' column='reg_date' />
+		<result property='content' column='content' />
+		<result property='imageName' column='image_name' />
+		<result property='displayState' column='display_state' />
+		<result property='clothLevel' column='cloth_level' />
+		<result property='color' column='color' />
+		<result property='clothSize' column='cloth_size' />
+		<result property='quantity' column='quantity' />
+	</resultMap>
+
+	<insert id='insertCloth'>
+		insert into cloths(cloth_num, cloth_name, kind, price, reg_date, 
+		content, image_name, display_state, cloth_level, color, 
+		cloth_size, quantity)
+		values (kimmyeonghoe.cloth_clothnum_seq.nextval, #{clothName}, #{kind}, #{price}, sysdate, 
+		#{content}, #{imageName}, #{displayState}, #{clothLevel}, #{color},
+		#{clothSize}, #{quantity})
+	</insert>
+
+	<update id='updateCloth'>
+		update cloths
+		set cloth_Name = #{clothName}, price = #{price}, reg_date = sysdate, 
+		content = #{content}, image_name = #{imageName}, display_state = #{displayState}, 
+		cloth_level = #{clothLevel}, quantity = #{quantity}
+		where cloth_num = #{clothNum}
+	</update>
+
+	<delete id='deleteCloth'>
+		delete cloths
+		where cloth_num = #{clothNum}
+	</delete>
+</mapper>

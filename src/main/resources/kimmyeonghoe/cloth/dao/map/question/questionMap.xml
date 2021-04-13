@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='kimmyeonghoe.cloth.dao.map.question.QuestionMap'>
+	<select id='selectQuestions' resultMap='questionMap'>
+		select question_num, title, content, user_id, reg_date
+		from questions
+		order by question_num desc
+	</select>
+	
+	<select id='selectQuestion' resultMap='searchMap'>
+		select question_num, title, content, user_id, reg_date, answer_content
+		from questions
+		where question_num = #{questionNum}
+	</select>
+	
+	<update id='updateQuestion'>
+		update questions
+		set title = #{title},
+			content = #{content}
+		where question_num = #{questionNum}
+	</update>
+	
+	<update id='updateAnswer'>
+		update questions
+		set answer_content = #{answerContent}
+		where question_num = #{questionNum}
+	</update>
+	
+	<resultMap id='questionMap' type='question'>
+		<id property='questionNum' column='question_num' />
+		<result property='title' column='title' />
+		<result property='content' column='content' />		
+		<result property='userId' column='user_id' />
+		<result property='regDate' column='reg_date' />
+	</resultMap>
+	
+	<resultMap id='searchMap' type='question'>
+		<id property='questionNum' column='question_num' />
+		<result property='title' column='title' />
+		<result property='content' column='content' />		
+		<result property='userId' column='user_id' />
+		<result property='regDate' column='reg_date' />
+		<result property='answerContent' column='answer_content' />
+	</resultMap>
+
+	<insert id='insertQuestion'>
+		insert into questions(question_num, title, content, user_id, reg_date)
+		values (question_questionnum_seq.nextval, #{title}, #{content}, #{userId}, sysdate)
+	</insert>
+	
+	<delete id='deleteQuestion'>
+		delete questions
+		where question_num = #{questionNum}
+	</delete>
+</mapper>

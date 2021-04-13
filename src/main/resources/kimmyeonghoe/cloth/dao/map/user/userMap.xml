@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='kimmyeonghoe.cloth.dao.map.user.UserMap'>
+	<select id='login' resultMap='loginMap'>
+      select * from users
+      where user_id = #{userId} and user_pw = #{userPw} 
+   </select>
+   
+   <select id='selectId' resultType='string'>
+	   	select user_id from users
+	   	where user_id = #{userId}
+   </select>
+   
+   <select id='selectEmail' resultType='string'>
+	   	select email from users
+	   	where email = #{email}
+   </select>
+   
+   <select id='selectIdWithEmail' resultType='string'>
+		select user_id from users
+		where (email = #{email})
+   </select>
+   
+   <select id='selectUser' resultMap='userMap'>
+		select * from users
+		where user_id = #{userId}
+   </select>
+   
+   <insert id='insertUser'>
+		insert into users(user_id, user_pw, user_name, birthday, contact, email,
+		postcode, address, address_detail, join_date, withdrawal_date)
+		values (#{userId}, #{userPw}, #{userName}, #{birthday}, #{contact}, #{email},
+			#{postcode}, #{address}, #{addressDetail}, sysdate, null)
+	</insert>
+	
+	<update id='updatePw'>
+		update users
+		set user_pw = #{userPw}
+		where user_id = #{userId}
+	</update>
+	
+	<update id='updateEmail'>
+		update users
+		set email = #{email}
+		where user_id = #{userId}
+	</update>
+	
+	<update id='updateContact'>
+		update users
+		set contact = #{contact}
+		where user_id = #{userId}
+	</update>
+	
+	<update id='updateAddress'>
+		update users
+		set postcode = #{postcode},
+			address = #{address},
+			address_detail = #{addressDetail}
+		where user_id = #{userId}
+	</update>
+	
+   <resultMap id='loginMap' type='user'>
+      <id property='userId' column='user_id'/>
+      <result property='userPw' column='user_pw'/>
+   </resultMap>
+   
+   <resultMap id='searchId' type='string'>
+      <id property='userId' column='user_id'/>
+   </resultMap>
+   
+   <resultMap id='userMap' type='user'>
+      <id property='userId' column='user_id'/>
+      <result property='userPw' column='user_pw'/>
+      <result property='userName' column='user_name'/>
+      <result property='birthday' column='birthday'/>
+      <result property='contact' column='contact'/>
+      <result property='email' column='email'/>
+      <result property='postcode' column='postcode'/>
+      <result property='address' column='address'/>
+      <result property='addressDetail' column='address_detail'/>
+      <result property='joinDate' column='join_date'/>
+      <result property='withdrawalDate' column='withdrawal_date'/>
+   </resultMap>
+   
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='kimmyeonghoe.cloth.dao.map.logo.LogoMap'>
+	<insert id='insertImage'>
+      	insert into images(image_num, file_name, stored_name, file_size, reg_date)
+      	values(KIMMYEONGHOE.IMAGE_IMAGENUM_SEQ.nextval, #{fileName}, #{storedName}, #{fileSize}, sysdate)
+   </insert>
+   <insert id='insertLogo' keyProperty="imageNum">
+   		<selectKey keyProperty="imageNum" resultType="int" order="BEFORE">
+   			select image_num from images
+			where stored_name = #{storedName}
+   		</selectKey>
+   		insert into logos(logo_num, logo_name, stored_name, reg_date, image_num)
+		values(KIMMYEONGHOE.LOGO_LOGONUM_SEQ.nextval, #{logoName}, #{storedName}, sysdate, ${imageNum})
+   </insert>
+   
+   <select id='selectLogoName' resultType='string'>
+	   	select stored_name from (
+	   		select * from logos
+	   		order by logo_num desc
+	   	)
+	   	where ROWNUM = 1
+   </select>
+   
+   <delete id='deleteImage'>
+		delete images
+		where image_num = #{imageNum}
+   </delete>
+   
+   <delete id='deleteLogo'>
+		delete logos
+		where logo_num = #{logoNum}
+   </delete>
+   
+   <select id='selectStoredName' resultType='string'>
+		select stored_name from logos
+		where logo_num = #{logoNum}
+   </select>
+   
+   <select id='selectlogoNum' resultType='int'>
+		select logo_num from (
+	   		select * from logos
+	   		order by logo_num desc
+	   	)
+	   	where ROWNUM = 1
+   </select>
+   
+   <resultMap id='logo' type='logo'>
+      <id property='logoNum' column='logo_num'/>
+      <result property='logoName' column='logo_name'/>
+      <result property='regDate' column='reg_date'/>
+      <result property='imageNum' column='image_num'/>
+   </resultMap>
+   
+</mapper>

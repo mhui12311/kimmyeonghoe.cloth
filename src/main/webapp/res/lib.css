@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+*{
+   font-family: 'Noto Sans KR', sans-serif;
+}
+#rightBar {
+   text-align:right;
+   margin-top: 10px;
+   font-color: lightgreay;
+}
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color:blue ; text-decoration: underline;}
+
+#footerTable{
+   justify-content:around;
+}
+#logoBottom {
+   width: 150px;
+   height: 60px;
+   text-align: center;
+   justify-content: center;
+   border: 1px solid lightgrey;
+}
+.gnb_lists {
+   text-align: center;
+   font-size: 20px;
+   margin: 10px;
+}
+#banner {
+   width: auto;
+   height: 100px;
+   margin-top: 10px;
+   text-align: center;
+   border: 1px solid lightgrey;
+}
+
+.contents-wrap {
+	text-align:start;
+    min-height: 200%;
+    position: relative;
+	padding-bottom: 50px; 
+}
+footer {
+	position: absolute;
+	width: 100%;
+	height: 35%;
+	color: white;
+	text-align: left;
+	background: black;
+	padding: 30px 0;
+	justify-content: center;
+}
+address {
+	font-size: 13px;
+	color: white;
+}
+
+#contactInfo {
+	color: white;
+}
+#footerBottom {
+	font-size: 10px;
+	color: grey;
+	justify-content: center;
+}

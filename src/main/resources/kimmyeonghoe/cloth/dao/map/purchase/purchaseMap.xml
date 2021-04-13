@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='kimmyeonghoe.cloth.dao.map.purchase.PurchaseMap'>
+	<select id='selectHistory' resultMap='p_purchaseMap'>
+		select * from purchases
+		where user_id = #{userId}
+   </select>
+   
+   <select id='selectPchsItems' resultMap='p_itemsMap'>
+		select b.cloth_name, b.price, a.purchase_amount, b.color, b.cloth_size
+		from kimmyeonghoe.cloth_purchases a join kimmyeonghoe.cloths b
+		on a.cloth_num = b.cloth_num
+		join kimmyeonghoe.purchases c
+		on a.purchase_num = c.purchase_num
+		where user_id = #{userId};
+   </select>
+   
+   <select id='selectClothNames' resultMap='p_namesMap'>
+		select b.cloth_name
+		from kimmyeonghoe.cloth_purchases a join kimmyeonghoe.cloths b
+		on a.cloth_num = b.cloth_num
+		join kimmyeonghoe.purchases c
+		on a.purchase_num = c.purchase_num
+		where user_id = #{userId}
+   </select>
+   
+   <insert id='insertCloPur'>
+		insert into cloth_purchases
+		(clopur_num, cloth_num, purchase_num, purchase_amount)
+		values(KIMMYEONGHOE.CLOPUR_CLOPURNUM_SEQ, #{cloth_num}, #{purchase_num}, #{purchase_amount})
+   </insert>
+	
+	<insert id='insertPurchase'>
+		insert
+		into purchases(
+		purchase_num,
+		price,
+		delivery_fee,
+		purchase_date,
+		delivery_state,
+		user_id
+		)
+		values(
+		KIMMYEONGHOE.PURCHASE_PURCHASENUM_SEQ.nextval,
+		#{price},
+		#{deliveryFee}, 
+		sysdate, 
+		#{deliveryState}, 
+		#{userId}
+		)
+	</insert>
+	
+	<insert id='insertCloPur'>
+		insert
+		into cloth_purchases(
+		clopur_num, 
+		cloth_num, 
+		purchase_num, 
+		purchase_amount
+		)
+		values(
+		KIMMYEONGHOE.CLOPUR_CLOPURNUM_SEQ.nextval,
+		#{clothNum}, 
+		#{purchaseNum}, 
+		#{purchaseAmount}
+		)
+	</insert>
+
+
+    <resultMap id='p_purchaseMap' type='purchase'>
+      <id property='purchaseNum' column='purchase_num'/>
+      <result property='price' column='price'/>
+      <result property='deliveryFee' column='delivery_fee'/>
+      <result property='purchaseDate' column='purchase_date'/>
+      <result property='deliveryState' column='delivery_state'/>
+      <result property='userId' column='user_id'/>
+   </resultMap>
+   
+   <resultMap id='p_itemsMap' type='purchase'>
+		<id property='userId' column='user_id'/>
+      <result property='clothName' column='cloth_name'/>
+      <result property='price' column='price'/>
+      <result property='purchaseAmount' column='purchase_amount'/>
+      <result property='color' column='color'/>
+      <result property='clothSize' column='cloth_size'/>
+   </resultMap>
+   
+   <resultMap id='p_namesMap' type='purchase'>
+      <result property='clothName' column='cloth_name'/>
+      <result property='userId' column='user_id'/>
+   </resultMap>
+   
+</mapper>
+
+
+<!-- 
+		
+		
+		insert
+		into purchases(
+		purchase_num,
+		price,
+		delivery_fee,
+		purchase_date,
+		delivery_state,
+		user_id
+		)
+		values(
+		KIMMYEONGHOE.PURCHASE_PURCHASENUM_SEQ.nextval,
+		#{price},
+		#{deliveryFee}, 
+		sysdate, 
+		#{deliveryState}, 
+		#{userId}
+		)
+		
+		
+		insert
+		into cloth_purchases(
+		clopur_num, 
+		cloth_num, 
+		purchase_num, 
+		purchase_amount
+		)
+		values(
+		KIMMYEONGHOE.CLOPUR_CLOPURNUM_SEQ.nextval,
+		#{clothNum}, 
+		#{purchaseNum}, 
+		#{purchaseAmount}
+		)
+ -->
